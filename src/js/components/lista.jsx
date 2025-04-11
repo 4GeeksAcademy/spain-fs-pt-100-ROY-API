@@ -52,7 +52,7 @@ const getTareaUsuario =()=>{
 useEffect(() =>{
 if (tarea.length > 0){
 
-    fetch ('https://playground.4geeks.com/todo/users/RoyCuba',{
+    fetch ('https://playground.4geeks.com/todo/todos/RoyCuba',{
 
         method: 'POST',
         body :JSON.stringify({
@@ -84,7 +84,7 @@ if(!resp.ok) throw new Error (`error code: ${resp.status}`)
 
 const submit =(e)=>{
     e.preventDefault();     
-    console.log('asdsadsadsdsdsad')
+    
     setData([...data,{label: tarea, is_done:false}])
     
       }
