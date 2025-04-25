@@ -24,7 +24,11 @@ const Lis = () => {
 //POST
     const crearUsuario=()=>{
         fetch ('https://playground.4geeks.com/todo/users/RoyCuba',{
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         })
          .then(resp => {
             if(!resp.ok) throw new Error (`error code: ${resp.status}`)
@@ -35,55 +39,41 @@ const Lis = () => {
     }
 
 
-//GET
-const getTareaUsuario =()=>{
-    fetch ('https://playground.4geeks.com/todo/users/RoyCuba')
-    .then(resp =>{
-
-        if(!resp.ok) throw new Error (`error code: ${resp.status}`)
-            return resp.json()
-    })
-    .then(data =>setData(data.todos))
-    .catch(err =>crearUsuario())
-}
 
 
 
-useEffect(() =>{
-if (tarea.length > 0){
-
-    fetch ('https://playground.4geeks.com/todo/todos/RoyCuba',{
-
-        method: 'POST',
-        body :JSON.stringify({
-            "label": tarea,
-            "is_done":false
-        }),
-     headers :{'Content-Type': 'application/json'}
-                       
-    })
-    .then(resp =>{
-
-if(!resp.ok) throw new Error (`error code: ${resp.status}`)
-    return resp.json()
-
-    })
-    .then(data => { 
-        console.log(data)
-        setTarea('')
 
 
-    })
-    .catch(err => console.log(err))
-}
-
-
-
-},[data])
 
 
 const submit =(e)=>{
-    e.preventDefault();     
+    e.preventDefault();  
+    if (tarea.length > 0){
+
+        fetch ('https://playground.4geeks.com/todo/todos/RoyCuba',{
+    
+            method: 'POST',
+            body :JSON.stringify({
+                "label": tarea,
+                "is_done":false
+            }),
+         headers :{'Content-Type': 'application/json'}
+                           
+        })
+        .then(resp =>{
+    
+    if(!resp.ok) throw new Error (`error code: ${resp.status}`)
+        return resp.json()
+    
+        })
+        .then(data => { 
+            console.log(data)
+            setTarea('')
+    
+    
+        })
+        .catch(err => console.log(err))
+    }   
     
     setData([...data,{label: tarea, is_done:false}])
     
@@ -100,6 +90,18 @@ const handleDelete = (id) => {
 
 }
  console.log(data)
+
+ //GET
+const getTareaUsuario =()=>{
+    fetch ('https://playground.4geeks.com/todo/users/RoyCuba')
+    .then(resp =>{
+
+        if(!resp.ok) throw new Error (`error code: ${resp.status}`)
+            return resp.json()
+    })
+    .then(data =>setData(data.todos))
+    .catch(err =>crearUsuario())
+}
 
  const totales =()=>{
     return data.length
